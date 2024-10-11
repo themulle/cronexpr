@@ -33,7 +33,7 @@ Slashes describe increments of ranges. For example `3-59/15` in the minute field
 Commas are used to separate items of a list. For example, using `MON,WED,FRI` in the 5th field (day of week) means Mondays, Wednesdays and Fridays.
 
 #### Hyphen ( - )
-Hyphens define ranges. For example, 2000-2010 indicates every year between 2000 and 2010 AD, inclusive.
+Hyphens define ranges. For example, 2000-2010 indicates every year between 2000 and 2010 AD, inclusive. Inverse ranges are supported. `NOV-FEB` matches NOV,DEC,JAN,FEB  `FRI-SUN` matches FRI,SAT,SUN `SUN-TUE` matches SUN,MON,TUE
 
 #### L
 `L` stands for "last". When used in the day-of-week field, it allows you to specify constructs such as "the last Friday" (`5L`) of a given month. In the day-of-month field, it specifies the last day of the month.
