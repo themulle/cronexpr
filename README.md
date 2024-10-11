@@ -2,11 +2,7 @@ Golang Cron expression parser
 =============================
 Given a cron expression and a time stamp, you can get the next time stamp which satisfies the cron expression.
 
-In another project, I decided to use cron expression syntax to encode scheduling information. Thus this standalone library to parse and apply time stamps to cron expressions.
-
-The time-matching algorithm in this implementation is efficient, it avoids as much as possible to guess the next matching time stamp, a common technique seen in a number of implementations out there.
-
-There is also a companion command-line utility to evaluate cron time expressions: <https://github.com/gorhill/cronexpr/tree/master/cronexpr> (which of course uses this library).
+This project is a fork from https://github.com/gorhill/cronexpr.
 
 Implementation
 --------------
@@ -68,17 +64,17 @@ Other details
 * If only six fields are present, a `0` second field is prepended, that is, `* * * * * 2013` internally become `0 * * * * * 2013`.
 * If only five fields are present, a `0` second field is prepended and a wildcard year field is appended, that is, `* * * * Mon` internally become `0 * * * * Mon *`.
 * Domain for day-of-week field is [0-7] instead of [0-6], 7 being Sunday (like 0). This to comply with http://linux.die.net/man/5/crontab#.
-* As of now, the behavior of the code is undetermined if a malformed cron expression is supplied
+* As of now, the behavior of the code is undetermined if a malformed cron expression is supplied.
 
 Install
 -------
-    go get github.com/gorhill/cronexpr
+    go get github.com/themulle/cronexpr
 
 Usage
 -----
 Import the library:
 
-    import "github.com/gorhill/cronexpr"
+    import "github.com/themulle/cronexpr"
     import "time"
 
 Simplest way:
@@ -116,13 +112,11 @@ which returns a slice of time.Time objects, containing the following time stamps
     2028-02-29 00:00:00
     2032-02-29 00:00:00
 
-The time zone of time values returned by `Next` and `NextN` is always the
-time zone of the time value passed as argument, unless a zero time value is
-returned.
+The time zone of time values returned by `Next` and `NextN` is always the time zone of the time value passed as argument, unless a zero time value is returned.
 
 API
 ---
-<http://godoc.org/github.com/gorhill/cronexpr>
+<http://godoc.org/github.com/themulle/cronexpr>
 
 License
 -------
@@ -131,4 +125,3 @@ License: pick the one which suits you best:
 
 - GPL v3 see <https://www.gnu.org/licenses/gpl.html>
 - APL v2 see <http://www.apache.org/licenses/LICENSE-2.0>
-
