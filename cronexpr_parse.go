@@ -279,7 +279,7 @@ func genericFieldHandler(s string, desc fieldDescriptor) ([]int, error) {
 		case one:
 			populateOne(values, directive.first)
 		case span:
-			populateMany(values, directive.first, directive.last, directive.step)
+			populateMany(values, directive.first, directive.last, directive.step, desc)
 		case all:
 			return desc.defaultList, nil
 		}
@@ -319,9 +319,9 @@ func (expr *Expression) dowFieldHandler(s string) error {
 		case one:
 			populateOne(expr.daysOfWeek, directive.first)
 		case span:
-			populateMany(expr.daysOfWeek, directive.first, directive.last, directive.step)
+			populateMany(expr.daysOfWeek, directive.first, directive.last, directive.step,dowDescriptor)
 		case all:
-			populateMany(expr.daysOfWeek, directive.first, directive.last, directive.step)
+			populateMany(expr.daysOfWeek, directive.first, directive.last, directive.step,dowDescriptor)
 			expr.daysOfWeekRestricted = false
 		}
 	}
@@ -365,9 +365,9 @@ func (expr *Expression) domFieldHandler(s string) error {
 		case one:
 			populateOne(expr.daysOfMonth, directive.first)
 		case span:
-			populateMany(expr.daysOfMonth, directive.first, directive.last, directive.step)
+			populateMany(expr.daysOfMonth, directive.first, directive.last, directive.step,domDescriptor)
 		case all:
-			populateMany(expr.daysOfMonth, directive.first, directive.last, directive.step)
+			populateMany(expr.daysOfMonth, directive.first, directive.last, directive.step,domDescriptor)
 			expr.daysOfMonthRestricted = false
 		}
 	}
@@ -380,9 +380,18 @@ func populateOne(values map[int]bool, v int) {
 	values[v] = true
 }
 
-func populateMany(values map[int]bool, min, max, step int) {
-	for i := min; i <= max; i += step {
-		values[i] = true
+func populateMany(values map[int]bool, min, max, step int, desc fieldDescriptor) {
+	populate := func(values map[int]bool, min, max, step int) {
+		for i := min; i <= max; i += step {
+			values[i] = true
+		}
+	}
+	
+	if min<=max {
+		populate(values,min,max,step)
+	} else {
+		populate(values,min,desc.max,step)
+		populate(values,desc.min,max,step)
 	}
 }
 
